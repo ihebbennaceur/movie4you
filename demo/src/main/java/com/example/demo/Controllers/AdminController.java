@@ -48,7 +48,7 @@ public class AdminController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete_admin/{id}")
     public String deleteAdmin(@PathVariable("id") Integer id){
 
         if (!adminRepository.existsById(id)){return "admin not found";}
@@ -57,7 +57,7 @@ public class AdminController {
         return "Admin is deleted ";
     }
 
-    @PutMapping("edit/{id}")
+    @PutMapping("edit_admin/{id}")
     public String  updatePassword(@PathVariable("id") Integer id, @RequestParam String newPassword){
         if (!adminRepository.existsById(id)){return "admin not found";}
         if (newPassword ==null || newPassword.trim().isEmpty()){return "Password cant be empty";}

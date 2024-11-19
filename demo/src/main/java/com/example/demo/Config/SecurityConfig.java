@@ -8,21 +8,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable() // Désactive la protection CSRF pour simplifier les tests
-                .authorizeHttpRequests() // use authorizeRequests()
-                .requestMatchers("/api/v1/**").permitAll() // autorise tous les endpoints sous /api/v1/
-                .anyRequest().authenticated().and()
-                .formLogin()
-                .loginPage("/admin/login")
-          .loginProcessingUrl("/login").defaultSuccessUrl("/home", true) .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .httpBasic();;
+@Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            http.csrf().disable() // Disable CSRF for simplicity (only for testing)
+                    .authorizeHttpRequests()
+                    .anyRequest().permitAll() // Permit all requests
+                    .and()
+                    .httpBasic(); // Optional: Enable basic HTTP authentication
 
-        return http.build();
+            return http.build();
     }
 }
+
+
