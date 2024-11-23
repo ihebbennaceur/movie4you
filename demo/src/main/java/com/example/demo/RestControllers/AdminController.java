@@ -1,4 +1,4 @@
-package com.example.demo.Controllers;
+package com.example.demo.RestControllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.example.demo.Entitys.AdminEntity;
@@ -6,9 +6,6 @@ import com.example.demo.Repositories.AdminRepository;
 import com.example.demo.Services.AdminService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/admin")
 
 public class AdminController {
 
@@ -29,38 +26,38 @@ public class AdminController {
     public List<AdminEntity> getAllAdmins(){return adminRepository.findAll();}
 
     @PostMapping("/create_admin")
-    public String createAdmin(@Valid @RequestBody AdminEntity admin, BindingResult result){
-        if (admin.getUsername() == null || admin.getUsername().trim().isEmpty()) {return "Username cant be empty";}
+    public ResponseEntity<String> createAdmin(@Valid @RequestBody AdminEntity admin, BindingResult result){
+        if (admin.getUsername() == null || admin.getUsername().trim().isEmpty()) {return ResponseEntity.noContent().build();}
 
-        if(admin.getPassword() == null || admin.getPassword().trim().isEmpty()) {return "Password cant be empty";}
+        if(admin.getPassword() == null || admin.getPassword().trim().isEmpty()) {return ResponseEntity.noContent().build();}
 
      if (adminRepository.findByUsername(admin.getUsername()) != null){
 
-     return "Username already exists!";}
+     return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");}
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String hashedPassword = encoder.encode(admin.getPassword());
         admin.setPassword(hashedPassword);
 
         adminRepository.save(admin);
-        return "Admin created";
+        return ResponseEntity.ok("password changed");
 
     }
 
 
     @DeleteMapping("/delete_admin/{id}")
-    public String deleteAdmin(@PathVariable("id") Integer id){
+    public ResponseEntity<String> deleteAdmin(@PathVariable("id") Integer id){
 
-        if (!adminRepository.existsById(id)){return "admin not found";}
+        if (!adminRepository.existsById(id)){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin not found!");}
 
         adminService.deleteAdminById(id);
-        return "Admin is deleted ";
+        return ResponseEntity.ok("Admin deleted successfully");
     }
 
     @PutMapping("edit_admin/{id}")
-    public String  updatePassword(@PathVariable("id") Integer id, @RequestParam String newPassword){
-        if (!adminRepository.existsById(id)){return "admin not found";}
-        if (newPassword ==null || newPassword.trim().isEmpty()){return "Password cant be empty";}
+    public ResponseEntity<String>  updatePassword(@PathVariable("id") Integer id, @RequestParam String newPassword){
+        if (!adminRepository.existsById(id)){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin not found!");}
+        if (newPassword ==null || newPassword.trim().isEmpty()){return ResponseEntity.noContent().build();}
 
         AdminEntity admin = adminRepository.findById(id).get();
 
@@ -69,21 +66,22 @@ public class AdminController {
 
         admin.setPassword(hashedPassword);
         adminRepository.save(admin);
-        return "Password updated";
+
+        return ResponseEntity.ok("password changed");
         }
 
-    @GetMapping("/admin/login")
-    public String loginAdmin(@RequestParam String username, @RequestParam String password) {
+    @GetMapping("/login")
+    public ResponseEntity<String> loginAdmin(@RequestParam String username, @RequestParam String password) {
         AdminEntity admin = adminRepository.findByUsername(username);
         if (admin == null) {
-            return "admin not found";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin not found");
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (encoder.matches(password, admin.getPassword())) {
 
-            return "login success";
+            return ResponseEntity.ok("admin logged in successfully");
         } else {
-            return "wrong username or password ";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
         }
 
 
