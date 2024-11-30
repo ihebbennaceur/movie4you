@@ -1,7 +1,7 @@
-package com.example.demo.Services;
+package org.example.films.Services;
 
-import com.example.demo.Entitys.MovieEntity;
-import com.example.demo.Repositories.MovieRepository;
+import org.example.films.Entitys.MovieEntity;
+import org.example.films.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

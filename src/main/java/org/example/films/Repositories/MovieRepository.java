@@ -1,7 +1,7 @@
-package com.example.demo.Repositories;
+package org.example.films.Repositories;
 
 
-import com.example.demo.Entitys.MovieEntity;
+import org.example.films.Entitys.MovieEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

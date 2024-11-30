@@ -1,9 +1,8 @@
-package com.example.demo.RestControllers;
+package org.example.films.RestControllers;
 
-import com.example.demo.Entitys.MovieEntity;
-import com.example.demo.Entitys.UserEntity;
-import com.example.demo.Repositories.MovieRepository;
-import com.example.demo.Services.MovieService;
+import org.example.films.Entitys.MovieEntity;
+import org.example.films.Repositories.MovieRepository;
+import org.example.films.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

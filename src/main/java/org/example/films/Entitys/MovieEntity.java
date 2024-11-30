@@ -1,6 +1,6 @@
-package com.example.demo.Entitys;
+package org.example.films.Entitys;
 
-import com.example.demo.Entitys.WatchList;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -52,6 +52,6 @@ public class MovieEntity {
     @Column(name = "realisateur")
     private String realisateur;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<WatchList> watchLists = new ArrayList<>();
+//    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+//    private List<WatchList> watchLists = new ArrayList<>();
 }

@@ -1,8 +1,7 @@
-package com.example.demo.Repositories;
+package org.example.films.Repositories;
 
-import com.example.demo.Entitys.AdminEntity;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
+
+import org.example.films.Entitys.AdminEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

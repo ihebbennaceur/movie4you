@@ -1,9 +1,8 @@
-package com.example.demo.Entitys;
-import jakarta.validation.constraints.NotBlank;
+package org.example.films.Entitys;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.Generated;
 
 import java.io.Serializable;
 

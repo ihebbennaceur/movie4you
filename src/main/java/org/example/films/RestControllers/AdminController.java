@@ -1,14 +1,15 @@
-package com.example.demo.RestControllers;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import com.example.demo.Entitys.AdminEntity;
-import com.example.demo.Repositories.AdminRepository;
-import com.example.demo.Services.AdminService;
+package org.example.films.RestControllers;
+
+import org.example.films.Entitys.AdminEntity;
+import org.example.films.Repositories.AdminRepository;
+import org.example.films.Services.AdminService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class AdminController {
         admin.setPassword(hashedPassword);
 
         adminRepository.save(admin);
-        return ResponseEntity.ok("password changed");
+        return ResponseEntity.ok("created");
 
     }
 

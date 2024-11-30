@@ -1,5 +1,6 @@
-package com.example.demo.Entitys;
+package org.example.films.Entitys;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -32,7 +33,12 @@ public class UserEntity {
     @Column(name="Profilepic",nullable = true)
     private String profilepic;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<WatchList> watchLists = new ArrayList<>();
+    @ElementCollection
+    private List<Integer> watchList;
+
+
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<WatchList> watchLists = new ArrayList<>();
 
 }

@@ -1,7 +1,7 @@
-package com.example.demo.Services;
+package org.example.films.Services;
 
-import com.example.demo.Entitys.UserEntity;
-import com.example.demo.Repositories.UserRepository;
+import org.example.films.Entitys.UserEntity;
+import org.example.films.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +27,24 @@ public class UserService {
     public UserEntity getUserById(int id) {return userRepository.findById(id).get();}
 
     public void deleteUserById(int id) {userRepository.deleteById(id);}
+
+
+    public UserEntity addMovieToWatchList(int userId, int movieId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        if (!user.getWatchList().contains(movieId)) {
+            user.getWatchList().add(movieId);
+        }
+        return userRepository.save(user);
+    }
+
+    public UserEntity removeMovieFromWatchList(int userId, int movieId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        user.getWatchList().remove(Integer.valueOf(movieId));
+        return userRepository.save(user);
+    }
+
+    public List<Integer> getWatchList(int userId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getWatchList();
+    }
 }
