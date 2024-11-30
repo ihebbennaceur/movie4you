@@ -36,6 +36,9 @@ public class UserEntity {
     @ElementCollection
     private List<Integer> watchList;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<ReviewEntity> reviews = new ArrayList<>();
 
 //    @JsonManagedReference
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

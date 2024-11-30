@@ -52,6 +52,9 @@ public class MovieEntity {
     @Column(name = "realisateur")
     private String realisateur;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<ReviewEntity> reviews = new ArrayList<>();
+
 //    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
 //    private List<WatchList> watchLists = new ArrayList<>();
 }
