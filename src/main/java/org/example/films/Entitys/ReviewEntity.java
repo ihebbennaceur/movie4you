@@ -21,13 +21,14 @@ public class ReviewEntity {
     @Column(name = "review_date", nullable = false)
     private LocalDateTime reviewDate;
 
+
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     @ManyToOne
-    //@JsonBackReference
+    @JsonBackReference
     @JoinColumn(name = "movie_id", nullable = false)
     private MovieEntity movie;
 }
