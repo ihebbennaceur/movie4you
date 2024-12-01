@@ -1,36 +1,36 @@
 package org.example.films.Entitys;
 
-
-
-    import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-    @Entity
-    @Data
-    @Table(name="cinema")
-    public class CinemaEntity {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+@Entity
+@Data
+@Table(name = "cinemas")
+public class CinemaEntity implements Serializable {
 
-        @Column(name="name", nullable=false)
-        private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-        @Column(name="address", nullable = false)
-        private String address;
+    @Column(name = "name", nullable = false)
+    @NotBlank(message = "Name cannot be empty")
+    private String name;
 
-        @Column(name="number", nullable = false)
-        private int number; // Utilise int au lieu de Number
+    @Column(name = "address", nullable = false)
+    @NotBlank(message = "Address cannot be empty")
+    private String address;
 
-        @Column(name="website", nullable = true)
-        private String website;
+    @Column(name = "number", nullable = false)
+    private int number;
 
-        @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        @JsonManagedReference
-        private List<SeanceEntity> seances = new ArrayList<>();
-    }
+    @Column(name = "website")
+    private String website;
 
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SeanceEntity> seances = new ArrayList<>();
+}
