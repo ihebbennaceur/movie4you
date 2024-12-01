@@ -40,6 +40,9 @@ public class UserEntity {
     @JsonManagedReference
     private List<ReviewEntity> reviews = new ArrayList<>();
 
+
+
+
 //    @JsonManagedReference
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<WatchList> watchLists = new ArrayList<>();
