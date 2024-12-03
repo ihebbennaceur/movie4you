@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modifier un administrateur</title>
+</head>
+<body>
+<h1>Modifier l'administrateur</h1>
+<form th:action="@{/admin/update/{id}(id=${adminForm.id})}" th:object="${adminForm}" method="post">
+    <label for="username">Nom d'utilisateur :</label>
+    <input type="text" th:field="*{username}" id="username" />
+    <br />
+    <label for="password">Mot de passe :</label>
+    <input type="password" th:field="*{password}" id="password" />
+    <br />
+    <button type="submit">Modifier</button>
+</form>
+</body>
+</html>
