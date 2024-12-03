@@ -21,6 +21,10 @@ public class AdminService {
 
     public void deleteAdminById(int id) {adminRepository.deleteById(id);}
 
+    public AdminEntity adminUpdate(int id, AdminEntity adminEntity) {
+        adminEntity.setId(id);
+        return adminRepository.save(adminEntity);
+    }
 
 
 
