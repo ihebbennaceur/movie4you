@@ -67,6 +67,17 @@ public class User_mvc {
         return "redirect:/user/all_users";
     }
 
+    @GetMapping("/user/{id}")
+    public String showUserDetails(@PathVariable int id, Model model) {
+        Optional<UserEntity> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            model.addAttribute("user", userOptional.get());
+            return "user/details";
+        } else {
+            model.addAttribute("error", "User not found!");
+            return "error";
+        }
+    }
 
     @GetMapping("/edit_user/{id}")
     public String showEditUserForm(@PathVariable("id") Integer id, Model model) {

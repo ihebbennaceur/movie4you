@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Details</title>
+</head>
+<body>
+<h1>User Details</h1>
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red;"></p>
+</div>
+
+<div th:if="${user}">
+    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+    <p><strong>Profile Picture:</strong> <img th:src="${user.profilepic}" alt="Profile Picture" width="100" height="100"></p>
+
+    <h2>Watch List</h2>
+    <ul>
+        <li th:each="movieId : ${user.watchList}" th:text="${movieId}"></li>
+    </ul>
+
+    <h2>Reviews</h2>
+    <div th:each="review : ${user.reviews}">
+        <p><strong>Review ID:</strong> <span th:text="${review.id}"></span></p>
+        <p><strong>Content:</strong> <span th:text="${review.content}"></span></p>
+
+    </div>
+</div>
+</body>
+</html>

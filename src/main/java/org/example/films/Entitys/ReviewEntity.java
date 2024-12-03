@@ -1,10 +1,13 @@
 package org.example.films.Entitys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,13 +24,20 @@ public class ReviewEntity {
     @Column(name = "review_date", nullable = false)
     private LocalDateTime reviewDate;
 
+
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     @ManyToOne
-    //@JsonBackReference
+    @JsonBackReference
     @JoinColumn(name = "movie_id", nullable = false)
     private MovieEntity movie;
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<LikeEntity> likes = new ArrayList<>();
+
+
 }
