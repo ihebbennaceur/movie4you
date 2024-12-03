@@ -55,6 +55,10 @@ public class MovieEntity {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<ReviewEntity> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SeanceEntity> seances = new ArrayList<>();
+
+
 //    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
 //    private List<WatchList> watchLists = new ArrayList<>();
 }

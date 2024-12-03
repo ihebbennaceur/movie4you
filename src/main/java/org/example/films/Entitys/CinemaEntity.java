@@ -32,5 +32,7 @@ import java.util.List;
         @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         @JsonManagedReference
         private List<SeanceEntity> seances = new ArrayList<>();
+
+
     }
 
