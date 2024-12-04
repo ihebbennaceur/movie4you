@@ -1,7 +1,10 @@
 package org.example.films.Entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -12,15 +15,17 @@ public class SeanceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "movie_title", nullable = false)
+    private String movieTitle;
+
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+
+    @Column(name = "duration", nullable = false)
+    private int duration; // Duration in minutes
+
     @ManyToOne
-    @JoinColumn(name = "cinema_id")
+    @JoinColumn(name = "cinema_id", nullable = false)
+    @JsonBackReference
     private CinemaEntity cinema;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private MovieEntity movie;
-
-
-    @Column(name = "date", nullable = false)
-    private String date;
 }

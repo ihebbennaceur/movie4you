@@ -1,54 +1,47 @@
-
-
 package org.example.films.Services;
 
+import org.example.films.DTO.SeanceDTO;
 import org.example.films.Entitys.CinemaEntity;
-import org.example.films.Entitys.MovieEntity;
 import org.example.films.Entitys.SeanceEntity;
 import org.example.films.Repositories.CinemaRepository;
-import org.example.films.Repositories.MovieRepository;
 import org.example.films.Repositories.SeanceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SeanceService {
 
     private final SeanceRepository seanceRepository;
+    private final CinemaRepository cinemaRepository;
 
-    public SeanceService(SeanceRepository seanceRepository) {
+    @Autowired
+    public SeanceService(SeanceRepository seanceRepository, CinemaRepository cinemaRepository) {
         this.seanceRepository = seanceRepository;
+        this.cinemaRepository = cinemaRepository;
     }
 
-    public List<SeanceEntity> getAllSeances() {
-        return seanceRepository.findAll();
-    }
-
-    public SeanceEntity getSeanceById(int id) {
-        return seanceRepository.findById(id).orElseThrow(() -> new RuntimeException("Seance not found"));
-    }
-
-    CinemaRepository cinemaRepository;
-    MovieRepository movieRepository;
-    public SeanceEntity saveSeance(SeanceEntity seance) {
-        // Assurez-vous que l'objet 'cinema' et 'movie' est bien référencé
-        // Si nécessaire, chargez l'entité existante depuis la base de données avant de l'assigner
-        if (seance.getCinema() != null) {
-            // Exemple : charge l'entité cinéma à partir de l'ID (si nécessaire)
-            CinemaEntity cinema = cinemaRepository.findById(seance.getCinema().getId()).orElse(null);
-            seance.setCinema(cinema);
+    public SeanceEntity addSeance(SeanceDTO seanceDTO) {
+        Optional<CinemaEntity> cinemaOptional = cinemaRepository.findById(seanceDTO.getCinemaId());
+        if (!cinemaOptional.isPresent()) {
+            throw new RuntimeException("Cinema with ID " + seanceDTO.getCinemaId() + " not found");
         }
-        if (seance.getMovie() != null) {
-            // Exemple : charge l'entité film à partir de l'ID (si nécessaire)
-            MovieEntity movie = movieRepository.findById(seance.getMovie().getId()).orElse(null);
-            seance.setMovie(movie);
-        }
+
+        SeanceEntity seance = new SeanceEntity();
+        seance.setMovieTitle(seanceDTO.getMovieTitle());
+        seance.setStartTime(seanceDTO.getStartTime());
+        seance.setDuration(seanceDTO.getDuration());
+        seance.setCinema(cinemaOptional.get());
+
         return seanceRepository.save(seance);
     }
+    public List<SeanceEntity> getSeancesByCinemaId(int cinemaId) {
+        return seanceRepository.findByCinemaId(cinemaId);
+    }
 
-
-    public void deleteSeance(int id) {
+    public void deleteSeanceById(int id) {
         seanceRepository.deleteById(id);
     }
 }
