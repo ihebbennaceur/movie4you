@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,6 +18,10 @@ public class SeanceEntity {
 
     @Column(name = "movie_title", nullable = false)
     private String movieTitle;
+
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
+
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;

@@ -4,6 +4,7 @@ import org.example.films.DTO.SeanceDTO;
 import org.example.films.Entitys.SeanceEntity;
 import org.example.films.Services.SeanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,17 @@ public class SeanceController {
     public ResponseEntity<SeanceEntity> createSeance(@Valid @RequestBody SeanceDTO seanceDTO) {
         SeanceEntity seance = seanceService.addSeance(seanceDTO);
         return ResponseEntity.ok(seance);
+    }
+
+    @ControllerAdvice
+    public class GlobalExceptionHandler {
+
+        @ExceptionHandler(RuntimeException.class)
+        public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+            // Retourner un message d'erreur explicite en cas de RuntimeException
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred: " + ex.getMessage());
+        }
     }
 
     @GetMapping("/by_cinema/{cinemaId}")
