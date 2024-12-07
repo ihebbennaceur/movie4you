@@ -51,4 +51,15 @@ public class MovieService {
     public boolean movieExists(int id) {
         return movieRepository.existsById(id);
     }
+
+    public MovieEntity findById(Integer id) {return movieRepository.findById(id).get();}
+
+    public void addMovie2(MovieEntity movie) {
+        try {
+            movieRepository.save(movie);
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'ajout du film : " + e.getMessage());
+            throw e;
+        }
+    }
 }

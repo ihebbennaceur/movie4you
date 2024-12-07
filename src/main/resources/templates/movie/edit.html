@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Modifier un Film</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+  <h3>Modifier un Film</h3>
+  <div class="card">
+    <div class="card-body">
+      <form th:action="@{/movie/edit_movie/{id}(id=${movie.id})}" th:object="${movie}" method="post">
+        <div class="form-group">
+          <label for="name">Nom du Film</label>
+          <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Nom du film">
+        </div>
+        <div class="form-group">
+          <label for="releaseDate">Date de Sortie</label>
+          <input type="date" th:field="*{releaseDate}" class="form-control" id="releaseDate">
+        </div>
+        <div class="form-group">
+          <label for="duration">Durée (minutes)</label>
+          <input type="number" th:field="*{duration}" class="form-control" id="duration" placeholder="Durée">
+        </div>
+        <div class="form-group">
+          <label for="rateImdb">Note IMDB</label>
+          <input type="text" th:field="*{rateImdb}" class="form-control" id="rateImdb" placeholder="Note IMDB">
+        </div>
+        <div class="form-group">
+          <label for="rateUser">Note Utilisateur</label>
+          <input type="text" th:field="*{rateUser}" class="form-control" id="rateUser" placeholder="Note Utilisateur">
+        </div>
+        <div class="form-group">
+          <label for="posters">Affiche (URL)</label>
+          <input type="text" th:field="*{posters}" class="form-control" id="posters" placeholder="URL de l'affiche">
+        </div>
+        <div class="form-group">
+          <label for="genre">Genre</label>
+          <input type="text" th:field="*{genre}" class="form-control" id="genre" placeholder="Genre">
+        </div>
+        <div class="form-group">
+          <label for="plots">Synopsis</label>
+          <input type="text" th:field="*{plots}" class="form-control" id="plots" placeholder="Synopsis">
+        </div>
+        <div class="form-group">
+          <label for="actors">Acteurs</label>
+          <input type="text" th:field="*{actors}" class="form-control" id="actors" placeholder="Acteurs">
+        </div>
+        <div class="form-group">
+          <label for="bandeAnnonce">Bande-Annonce (URL)</label>
+          <input type="text" th:field="*{bandeAnnonce}" class="form-control" id="bandeAnnonce" placeholder="URL de la bande-annonce">
+        </div>
+        <div class="form-group">
+          <label for="realisateur">Réalisateur</label>
+          <input type="text" th:field="*{realisateur}" class="form-control" id="realisateur" placeholder="Réalisateur">
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

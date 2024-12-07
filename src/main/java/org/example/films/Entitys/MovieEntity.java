@@ -52,4 +52,8 @@ public class MovieEntity {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ReviewEntity> reviews = new ArrayList<>();
-}
+
+
+    public Integer getDuration() {
+        return duration;
+    }}

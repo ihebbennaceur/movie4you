@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Détails du Film</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <h1 th:text="${movie.name}">Nom du film</h1>
+    <p><strong>Date de sortie :</strong> <span th:text="${movie.releaseDate}">Date</span></p>
+    <p><strong>Durée :</strong> <span th:text="${movie.duration}">Durée</span> minutes</p>
+    <p><strong>Note IMDB :</strong> <span th:text="${movie.rateImdb}">Note</span></p>
+    <p><strong>Genre :</strong> <span th:text="${movie.genre}">Genre</span></p>
+    <p><strong>Synopsis :</strong> <span th:text="${movie.plots}">Synopsis</span></p>
+    <p><strong>Acteurs :</strong> <span th:text="${movie.actors}">Acteurs</span></p>
+
+    <div>
+        <strong>Affiche :</strong>
+        <img th:src="${movie.posters}" alt="Affiche du film" class="img-fluid">
+    </div>
+
+    <div>
+        <strong>Bande-annonce :</strong>
+        <iframe th:src="${movie.bandeAnnonce}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="mt-4">
+        <a href="/movie/all_movies" class="btn btn-secondary">Retour à la liste</a>
+        <a th:href="@{/movie/edit_movie/{id}(id=${movie.id})}" class="btn btn-primary">Modifier</a>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

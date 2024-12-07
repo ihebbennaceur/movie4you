@@ -14,5 +14,6 @@ public interface MovieRepository extends JpaRepository<MovieEntity, Integer> {
     List<MovieEntity> findByGenre(String genre);
 
     List<MovieEntity> findByNameContainingIgnoreCase(String name);
+    List<MovieEntity> findByName(String name);
 }
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Liste des Films</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <h3>Liste des Films</h3>
+    <div th:if="${movies.isEmpty()}">
+        <p>Aucun film trouvé.</p>
+    </div>
+    <div th:unless="${movies.isEmpty()}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="movie : ${movies}">
+                <td th:text="${movie.id}"></td>
+                <td th:text="${movie.name}"></td>
+                <td>
+                    <a th:href="@{/movie/movie/{id}(id=${movie.id})}" class="btn btn-info btn-sm">Détails</a>
+                    <a th:href="@{/movie/edit_movie/{id}(id=${movie.id})}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a th:href="@{/movie/delete_movie/{id}(id=${movie.id})}" class="btn btn-danger btn-sm" th:onclick="'return confirm(\'Voulez-vous vraiment supprimer ce film ?\')'">Supprimer</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
