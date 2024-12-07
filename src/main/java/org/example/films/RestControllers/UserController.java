@@ -1,5 +1,7 @@
 package org.example.films.RestControllers;
 
+import jakarta.validation.Valid;
+import org.example.films.DTO.UserDTO;
 import org.example.films.Entitys.UserEntity;
 import org.example.films.Repositories.UserRepository;
 import org.example.films.Services.UserService;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,28 +52,22 @@ public class UserController {
     }
 
     @PostMapping("/create_user")
-    public String createUser(@RequestBody UserEntity user) {
-        if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
-            return "Username cant be empty";
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserDTO userDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body("Invalid user data");
+        }
+        if (userRepository.findByUsername(userDTO.getUsername()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
         }
 
-        if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
-            return "Password cant be empty";
+        UserEntity userEntity = userService.convertToEntity(userDTO);
+        if (userEntity.getPassword() != null && !userEntity.getPassword().isEmpty()) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            userEntity.setPassword(encoder.encode(userEntity.getPassword()));
         }
 
-        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
-            return "EMAIL cant be empty";
-        }
-
-        if (userRepository.findByUsername(user.getUsername()) != null) {
-            return "Username already exists!";
-        }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String hashedPassword = encoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
-
-        userService.createUser(user);
-        return "User created";
+        userRepository.save(userEntity);
+        return ResponseEntity.ok("User created successfully");
     }
 
     @DeleteMapping("/delete_user/{id}")
@@ -84,35 +81,43 @@ public class UserController {
     }
 
     @PutMapping("/edit_user/{id}")
-    public ResponseEntity<String> editUser(@PathVariable("id") Integer id, @RequestBody UserEntity userinput) {
-        Optional<UserEntity> optionalUser = userRepository.findById(id);
-        if (!optionalUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
+    public ResponseEntity<String> editUser(
+            @PathVariable("id") Integer id,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) String profilepic
+    ) {
+        Optional<UserEntity> userDb = userRepository.findById(id);
+        if (!userDb.isPresent()) {
+            return ResponseEntity.notFound().build();
         }
 
-        UserEntity userExist = optionalUser.get();
+        UserEntity user = userDb.get();
 
-        if (userinput.getPassword() == null || userinput.getPassword().trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Password can't be empty");
+        // Mise à jour des champs si des valeurs ont été passées
+        if (username != null) {
+            if (userRepository.findByUsername(username) != null) {
+                return ResponseEntity.badRequest().body("Username already exists!");
+            }
+            user.setUsername(username);
         }
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String hashedPassword = encoder.encode(userinput.getPassword());
-        userExist.setPassword(hashedPassword);
-
-        if (userinput.getEmail() != null && !userExist.getEmail().equals(userinput.getEmail())) {
-            if (userRepository.findByEmail(userinput.getEmail()) != null) {
+        if (email != null) {
+            if (userRepository.findByEmail(email) != null) {
                 return ResponseEntity.badRequest().body("Email already exists!");
             }
-            userExist.setEmail(userinput.getEmail());
+            user.setEmail(email);
+        }
+        if (password != null && !password.trim().isEmpty()) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String hashedPassword = encoder.encode(password);
+            user.setPassword(hashedPassword);
+        }
+        if (profilepic != null) {
+            user.setProfilepic(profilepic);
         }
 
-        if (userinput.getProfilepic() != null) {
-            userExist.setProfilepic(userinput.getProfilepic());
-        }
-
-        userRepository.save(userExist);
-
-        return ResponseEntity.ok("User updated successfully");
+        userRepository.save(user);
+        return ResponseEntity.ok("User updated successfully: " + user.getUsername());
     }
 }

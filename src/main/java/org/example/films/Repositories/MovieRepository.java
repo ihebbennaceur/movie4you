@@ -1,19 +1,18 @@
 package org.example.films.Repositories;
 
-
 import org.example.films.Entitys.MovieEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MovieRepository extends JpaRepository<MovieEntity, Integer> {
     List<MovieEntity> findByNameContaining(String name);
-
-List<MovieEntity> findAll();
-
-    MovieEntity findBySlug(String slug);
+    Optional<MovieEntity> findBySlug(String slug);
     List<MovieEntity> findByGenre(String genre);
 
+    List<MovieEntity> findByNameContainingIgnoreCase(String name);
 }
+

@@ -1,63 +1,55 @@
 package org.example.films.Entitys;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 @Table(name = "movies")
 public class MovieEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(name = "name", nullable = false)
+    @Column
     private String name;
 
-    @Column(name = "slug", nullable = false)
+    @Column
     private String slug;
 
-    @Column(name = "release_date", nullable = false)
+    @Column
     private String releaseDate;
 
-    @Column(name = "duration", nullable = false)
+    @Column
     private int duration;
 
-    @Column(name = "rate_imdb", nullable = false)
-    private String rateImdb;
+    @Column
+    private Double rateImdb;
 
-    @Column(name = "rate_user", nullable = false)
-    private String rateUser;
+    @Column
+    private Double rateUser;
 
-    @Column(name = "posters", nullable = false)
+    @Column
     private String posters;
 
-    @Column(name = "genre", nullable = false)
+    @Column
     private String genre;
 
-    @Column(name = "plots", nullable = false)
+    @Column
     private String plots;
 
-    @Column(name = "actors", nullable = false)
+    @Column
     private String actors;
 
-    @Column(name = "bande_annonce", nullable = false)
+    @Column
     private String bandeAnnonce;
 
-    @Column(name = "realisateur")
+    @Column
     private String realisateur;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ReviewEntity> reviews = new ArrayList<>();
-
-
 }
-
-//    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-//    private List<WatchList> watchLists = new ArrayList<>();
-

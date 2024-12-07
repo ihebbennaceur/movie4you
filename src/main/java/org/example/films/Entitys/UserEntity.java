@@ -9,42 +9,31 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name="users")
 @Data
 @Entity
-@Getter
-@Setter
-
+@Table(name = "users")
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="username",nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name="password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name="email",nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name="Profilepic",nullable = true)
+    @Column(name = "profilepic", nullable = true)
     private String profilepic;
 
     @ElementCollection
-    private List<Integer> watchList;
+    private List<Integer> watchList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ReviewEntity> reviews = new ArrayList<>();
-
-
-
-
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<WatchList> watchLists = new ArrayList<>();
-
 }
