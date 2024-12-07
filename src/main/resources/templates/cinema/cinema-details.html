@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Détails du Cinema</title>
+</head>
+<body>
+<h1>Détails du Cinema</h1>
+<div th:if="${cinema != null}">
+    <h2 th:text="${cinema.name}">Nom du cinéma</h2>
+    <p th:text="'Location: ' + ${cinema.location}">Location</p>
+    <p th:text="'Capacity: ' + ${cinema.capacity}">Capacity</p>
+    <p th:text="'Contact Info: ' + ${cinema.contactInfo}">Contact Info</p>
+</div>
+<a href="/cinema/all">Retour à la liste</a>
+</body>
+</html>

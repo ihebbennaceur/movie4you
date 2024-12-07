@@ -1,5 +1,6 @@
 package org.example.films.Services;
 
+import jakarta.validation.Valid;
 import org.example.films.DTO.SeanceDTO;
 import org.example.films.Entitys.SeanceEntity;
 import org.example.films.Entitys.CinemaEntity;
@@ -64,4 +65,11 @@ public class SeanceService {
     public void deleteSeanceById(int id) {
         seanceRepository.deleteById(id);
     }
+
+    public List<SeanceEntity> getAllSeances() {
+        return seanceRepository.findAll();
+    }
+
+    public SeanceEntity getSeanceById(int id) {return seanceRepository.findById(id).get();}
+
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface SeanceRepository extends JpaRepository<SeanceEntity, Integer> {
 
     List<SeanceEntity> findByCinemaId(int cinemaId);
+
 }

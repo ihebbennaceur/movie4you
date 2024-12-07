@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Créer un Nouveau Cinema</title>
+</head>
+<body>
+<h1>Créer un Nouveau Cinema</h1>
+<form th:action="@{/cinema/create}" th:object="${cinemaDTO}" method="post">
+    <div>
+        <label for="name">Nom:</label>
+        <input type="text" th:field="*{name}" required/>
+    </div>
+    <div>
+        <label for="location">Location:</label>
+        <input type="text" th:field="*{location}" required/>
+    </div>
+    <div>
+        <label for="capacity">Capacity:</label>
+        <input type="number" th:field="*{capacity}" required/>
+    </div>
+    <div>
+        <label for="contactInfo">Contact Info:</label>
+        <input type="text" th:field="*{contactInfo}"/>
+    </div>
+    <button type="submit">Créer</button>
+</form>
+<a href="/cinema/all">Retour à la liste</a>
+</body>
+</html>

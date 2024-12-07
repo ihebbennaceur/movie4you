@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Cinémas</title>
+</head>
+<body>
+<h1>Liste des Cinémas</h1>
+<div>
+    <a href="/cinema/create">Créer un Nouveau Cinema</a>
+</div>
+<div th:each="cinema : ${cinemas}">
+    <h2 th:text="${cinema.name}">Nom du cinéma</h2>
+    <p th:text="'Location: ' + ${cinema.location}">Location</p>
+    <p th:text="'Capacity: ' + ${cinema.capacity}">Capacity</p>
+    <a th:href="@{/cinema/details/{id}(id=${cinema.id})}">Voir les détails</a> |
+    <a th:href="@{/cinema/edit/{id}(id=${cinema.id})}">Modifier</a> |
+    <a th:href="@{/cinema/delete/{id}(id=${cinema.id})}" th:onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cinéma ?')">Supprimer</a>
+    <hr/>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Modifier le Cinema</title>
+</head>
+<body>
+<h1>Modifier le Cinema</h1>
+<form th:action="@{/cinema/edit/{id}(id=${cinema.id})}" th:object="${cinema}" method="post">
+  <div>
+    <label for="name">Nom:</label>
+    <input type="text" th:field="*{name}" required/>
+  </div>
+  <div>
+    <label for="location">Location:</label>
+    <input type="text" th:field="*{location}" required/>
+  </div>
+  <div>
+    <label for="capacity">Capacity:</label>
+    <input type="number" th:field="*{capacity}" required/>
+  </div>
+  <div>
+    <label for="contactInfo">Contact Info:</label>
+    <input type="text" th:field="*{contactInfo}"/>
+  </div>
+  <button type="submit">Modifier</button>
+</form>
+<a href="/cinema/all">Retour à la liste</a>
+</body>
+</html>

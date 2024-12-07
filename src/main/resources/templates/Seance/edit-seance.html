@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modifier la Séance</title>
+</head>
+<body>
+<h1>Modifier la Séance</h1>
+<form th:action="@{/seance/edit/{id}(id=${seance.id})}" th:object="${seance}" method="post">
+    <div>
+        <label for="movieTitle">Titre du film:</label>
+        <input type="text" th:field="*{movieTitle}" required/>
+    </div>
+    <div>
+        <label for="startTime">Heure de début:</label>
+        <input type="datetime-local" th:field="*{startTime}" required/>
+    </div>
+    <div>
+        <label for="duration">Durée (en minutes):</label>
+        <input type="number" th:field="*{duration}" required/>
+    </div>
+    <div>
+        <label for="cinemaId">Cinéma:</label>
+        <select th:field="*{cinema.id}">
+            <option th:each="cinema : ${cinemas}" th:value="${cinema.id}" th:text="${cinema.name}"></option>
+        </select>
+    </div>
+    <button type="submit">Modifier</button>
+</form>
+<a href="/seance/all">Retour à la liste</a>
+</body>
+</html>

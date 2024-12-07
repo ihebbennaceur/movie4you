@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Liste des Séances</title>
+</head>
+<body>
+<h1>Liste des Séances</h1>
+<div>
+  <a href="/seance/create">Créer une Nouvelle Séance</a>
+  <div th:each="seance : ${seances}">
+    <h2 th:text="${seance.movieTitle}">Titre du film</h2>
+    <p th:text="'Date: ' + ${seance.date}">Date</p>
+    <p th:text="'Heure de début: ' + ${seance.startTime}">Heure de début</p>
+    <p th:text="'Durée: ' + ${seance.duration} + ' minutes'">Durée</p>
+    <p>
+      <span>Cinéma: </span>
+      <a th:href="@{/cinema/details/{id}(id=${seance.cinema.id})}" th:text="${seance.cinema.name}">Nom du cinéma</a>
+    </p>
+    <a th:href="@{/seance/edit/{id}(id=${seance.id})}">Modifier seance</a> |
+    <a th:href="@{/seance/delete/{id}(id=${seance.id})}" th:onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette séance ?')">Supprimer</a>
+    <hr/>
+  </div>
+
+</body>
+</html>
