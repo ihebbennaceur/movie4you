@@ -39,5 +39,7 @@ public class ReviewEntity {
     @JsonManagedReference
     private List<LikeEntity> likes = new ArrayList<>();
 
+    public int getLikeCount() {
+        return (likes != null) ? likes.size() : 0;}
 
 }

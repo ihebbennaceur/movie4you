@@ -40,8 +40,31 @@ public class ReviewService {
         return reviewRepository.findByUserId(userId);
     }
 
+    public List<ReviewEntity> getAllReviewsByUser2(int userId) {
+        List<ReviewEntity> reviews = reviewRepository.findByUserId(userId);
+        System.out.println("Nombre de critiques trouvées : " + reviews.size());
+        return reviews;
+    }
+
+
     public void removeReview(int reviewId) {
         Optional<ReviewEntity> review = reviewRepository.findById(reviewId);
         review.ifPresent(reviewRepository::delete);
+    }
+
+
+    public List<ReviewEntity> getAllReviews() {
+        return reviewRepository.findAll();
+    }
+
+    public Optional<ReviewEntity> getReviewById(int id) {
+        return reviewRepository.findById(id);
+    }
+
+    public void updateReview(int id, String content) {
+        ReviewEntity review = reviewRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+        review.setContent(content);
+        reviewRepository.save(review);
     }
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signalement Details</title>
+</head>
+<body>
+<h1>Signalement Details</h1>
+<p>ID: <span th:text="${signalement.id}"></span></p>
+<p>Raison: <span th:text="${signalement.raison}"></span></p>
+<p>Status: <span th:text="${signalement.status ? 'Reviewed' : 'Pending'}"></span></p>
+<a href="/signalement/all_signalements">Back to list</a>
+</body>
+</html>

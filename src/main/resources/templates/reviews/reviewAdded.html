@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Critique ajoutée</title>
+</head>
+<body>
+<h2>Critique ajoutée avec succès!</h2>
+<p th:text="'Critique: ' + ${review.content}"></p>
+
+<p><a th:href="@{/user/user/{userId}(userId=${userId})}">Retourner à la liste des critiques</a></p>
+</body>
+</html>

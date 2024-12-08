@@ -22,4 +22,5 @@ public class LikeEntity {
     @JoinColumn(name = "review_id", nullable = false)
     @JsonBackReference
     private ReviewEntity review;
+
 }

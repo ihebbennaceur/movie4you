@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modifier Signalement</title>
+</head>
+<body>
+<h1>Modifier Signalement</h1>
+
+<form th:action="@{/signalement/edit_signalement/{id}(id=${signalement.id})}" method="post">
+    <input type="hidden" th:value="${signalement.id}" name="id" />
+
+    <label for="status">Statut :</label>
+    <select id="status" name="status">
+        <option th:value="true" th:selected="${signalement.status}">Validé</option>
+        <option th:value="false" th:selected="${!signalement.status}">En attente</option>
+    </select>
+
+    <button type="submit">Enregistrer</button>
+</form>
+
+
+<a th:href="@{/signalement/all_signalements}">Retour à la liste</a>
+
+</body>
+</html>

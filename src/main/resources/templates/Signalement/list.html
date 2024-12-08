@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Signalements</title>
+</head>
+<body>
+<h1>All Signalements</h1>
+<a href="/signalement/create_signalement">Create New Signalement</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Raison</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="signalement : ${signalements}">
+        <td th:text="${signalement.id}"></td>
+        <td th:text="${signalement.raison}"></td>
+        <td th:text="${signalement.status ? 'Reviewed' : 'Pending'}"></td>
+        <td>
+            <a th:href="@{/signalement/signalement/{id}(id=${signalement.id})}">View</a>
+            <a th:href="@{/signalement/edit_signalement/{id}(id=${signalement.id})}">Edit</a>
+            <a th:href="@{/signalement/delete_signalement/{id}(id=${signalement.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

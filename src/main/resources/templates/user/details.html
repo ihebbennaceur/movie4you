@@ -16,14 +16,15 @@
 
     <h2>Watch List</h2>
     <ul>
-        <li th:each="movieId : ${user.watchList}" th:text="${movieId}"></li>
+        <li th:each="movie : ${watchListMovies}">
+            <a th:href="@{/movie/movie/{id}(id=${movie.id})}" th:text="${movie.name}"></a>
+        </li>
     </ul>
 
     <h2>Reviews</h2>
     <div th:each="review : ${user.reviews}">
         <p><strong>Review ID:</strong> <span th:text="${review.id}"></span></p>
         <p><strong>Content:</strong> <span th:text="${review.content}"></span></p>
-
     </div>
 </div>
 </body>

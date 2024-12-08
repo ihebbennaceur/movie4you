@@ -15,7 +15,7 @@ public class SignalementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "raison", nullable = false)
+    @Column(name = "raison")
     private String raison;
 
     @Column(name = "created_at", nullable = false)

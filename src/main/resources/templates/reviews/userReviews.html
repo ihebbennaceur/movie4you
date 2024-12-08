@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Critiques de l'utilisateur</title>
+</head>
+<body>
+<h1>Critiques de l'utilisateur</h1>
+<div th:if="${reviews.isEmpty()}">
+    <p>Aucune critique trouvée pour cet utilisateur.</p>
+</div>
+<div th:unless="${reviews.isEmpty()}">
+    <ul>
+        <li th:each="review : ${reviews}">
+            <p><strong>Film :</strong> <span th:text="${review.movie.title}"></span></p>
+            <p><strong>Contenu :</strong> <span th:text="${review.content}"></span></p>
+            <a th:href="@{/reviews/delete/{id}(id=${review.id})}">Supprimer</a>
+        </li>
+    </ul>
+</div>
+<br>
+<a href="/reviews/add">Ajouter une critique</a>
+</body>
+</html>

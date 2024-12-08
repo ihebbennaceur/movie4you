@@ -1,7 +1,9 @@
 package org.example.films.Controllers;
 
+import org.example.films.Entitys.MovieEntity;
 import org.example.films.Entitys.UserEntity;
 import org.example.films.Repositories.UserRepository;
+import org.example.films.Services.MovieService;
 import org.example.films.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -67,11 +69,31 @@ public class User_mvc {
         return "redirect:/user/all_users";
     }
 
+//    @GetMapping("/user/{id}")
+//    public String showUserDetails(@PathVariable int id, Model model) {
+//        Optional<UserEntity> userOptional = userRepository.findById(id);
+//        if (userOptional.isPresent()) {
+//            model.addAttribute("user", userOptional.get());
+//            return "user/details";
+//        } else {
+//            model.addAttribute("error", "User not found!");
+//            return "error";
+//        }
+//    }
+
+    @Autowired
+    MovieService movieService;
     @GetMapping("/user/{id}")
     public String showUserDetails(@PathVariable int id, Model model) {
         Optional<UserEntity> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
-            model.addAttribute("user", userOptional.get());
+            UserEntity user = userOptional.get();
+            model.addAttribute("user", user);
+
+            // Fetch movies by their IDs in the user's watch list
+            List<MovieEntity> watchListMovies = movieService.getMoviesByIds(user.getWatchList());
+            model.addAttribute("watchListMovies", watchListMovies);
+
             return "user/details";
         } else {
             model.addAttribute("error", "User not found!");

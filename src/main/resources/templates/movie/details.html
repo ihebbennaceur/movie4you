@@ -24,11 +24,67 @@
         <iframe th:src="${movie.bandeAnnonce}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
     </div>
 
+    <div>
+        <strong>Critiques :</strong>
+        <ul>
+            <li th:each="review : ${movie.reviews}">
+                <p th:text="'ID : ' + ${review.id}"></p>
+                <p th:text="'Contenu de la critique : ' + ${review.content}"></p>
+                <p th:text="'Date de la critique : ' + ${review.reviewDate}"></p>
+
+                <p><strong>Nombre de likes : </strong><span th:text="${review.likeCount}"></span></p>
+
+                <!-- Formulaire de Like -->
+                <form action="/like" method="post" style="display:inline;">
+
+                    <input type="hidden" name="userId" value="1"> <!-- id utilisateur -->
+                    <input type="hidden" name="reviewId" th:value="${review.id}">
+                    <input type="hidden" name="movieId" th:value="${movie.id}">
+                    <button type="submit" class="btn btn-success">Like</button>
+                </form>
+
+                <!-- Formulaire de Unlike -->
+                <form action="/unlike" method="post" style="display:inline;">
+                    <input type="hidden" name="userId" value="1"> <!-- id utilisateur -->
+                    <input type="hidden" name="reviewId" th:value="${review.id}">
+                    <input type="hidden" name="movieId" th:value="${movie.id}">
+                    <button type="submit" class="btn btn-danger">Unlike</button>
+                </form>
+
+
+                <form th:action="@{/signalement/create_signalement}" method="post" style="display:inline;" id="signalementForm">
+                    <input type="hidden" name="userId" value="1">
+                    <input type="hidden" name="reviewId" th:value="${review.id}">
+                    <input type="hidden" id="raison" name="raison" value="">
+                    <button type="button" class="btn btn-danger" onclick="askRaison(this)">Signaler</button>
+                </form>
+            </li>
+                <script>
+                    function askRaison(button) {
+
+                        var raison = prompt("Veuillez entrer la raison de votre signalement :");
+
+
+                        if (raison !== null && raison.trim() !== "") {
+                            var form = button.closest('form');
+                            document.getElementById("raison").value = raison;
+                            form.submit();
+                        } else {
+                            alert("La raison est obligatoire !");
+                        }
+                    }
+                </script>
+
+
+
+            </li>
+        </ul>
+        <p th:if="${#lists.isEmpty(movie.reviews)}">Aucune critique trouvée pour ce film.</p>
+    </div>
+
     <div class="mt-4">
         <a href="/movie/all_movies" class="btn btn-secondary">Retour à la liste</a>
         <a th:href="@{/movie/edit_movie/{id}(id=${movie.id})}" class="btn btn-primary">Modifier</a>
-
-        </form>
     </div>
 </div>
 </body>

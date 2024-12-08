@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajouter une critique</title>
+</head>
+<body>
+<h2>Ajouter une critique</h2>
+<form th:action="@{/reviews/add}" method="post">
+  <label for="userId">ID Utilisateur:</label>
+  <input type="number" id="userId" name="userId" required><br>
+
+  <label for="movieId">ID Film:</label>
+  <input type="number" id="movieId" name="movieId" required><br>
+
+  <label for="content">Contenu:</label><br>
+  <textarea id="content" name="content" rows="4" required></textarea><br>
+
+  <button type="submit">Ajouter la critique</button>
+</form>
+</body>
+</html>

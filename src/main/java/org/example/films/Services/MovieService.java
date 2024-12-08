@@ -62,4 +62,7 @@ public class MovieService {
             throw e;
         }
     }
+
+    public List<MovieEntity> getMoviesByIds(List<Integer> watchList) {return movieRepository.findAllById(watchList);}
+
 }
